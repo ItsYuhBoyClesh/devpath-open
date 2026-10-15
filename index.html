@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>DevPath Open | Open Heightz</title>
+<style>body{font:1.05rem system-ui;margin:auto;max-width:760px;padding:2rem;line-height:1.6;background:#f9fafb;color:#17212b}button,select{font:inherit;padding:.7rem;margin:.25rem}button:focus-visible,select:focus-visible{outline:3px solid #2563eb}section{background:white;border:1px solid #ccd1d6;padding:1rem;border-radius:12px}pre{white-space:pre-wrap;background:#e8eef5;padding:1rem}</style></head><body>
+<header><h1>DevPath Open</h1><p>Small programming lessons that work after download. No account, advertisements or trackers.</p></header>
+<main><label for="track">Choose a lesson</label><select id="track"></select><section><h2 id="heading"></h2><p id="lesson"></p><pre id="example"></pre><p id="question"></p><label for="answer">Your answer</label><select id="answer"></select><button id="check">Check answer</button><p id="feedback" role="status" aria-live="polite"></p></section></main>
+<footer><p>An Open Heightz initiative, founded by Clesh TN Maluleka. MIT licensed.</p></footer>
+<script>
+const lessons=[
+{title:'Python: variables',body:'A variable stores a value. Python uses = to assign a value.',example:'name = "Clesh"\nprint(name)',question:'What does print(name) display?',answers:['name','Clesh','Nothing'],correct:1},
+{title:'Python: conditions',body:'An if statement runs code only when its condition is true.',example:'score = 80\nif score >= 50:\n    print("Pass")',question:'What is printed?',answers:['Fail','Pass','80'],correct:1},
+{title:'Web: semantic HTML',body:'Use meaningful elements such as main, nav and button to describe purpose.',example:'<main><h1>Welcome</h1><button>Start</button></main>',question:'Which element is best for an action?',answers:['div','span','button'],correct:2},
+{title:'Git: commits',body:'A commit records a snapshot of tracked changes in repository history.',example:'git add README.md\ngit commit -m "Document setup"',question:'Which command records the staged snapshot?',answers:['git commit','git status','git diff'],correct:0}];
+const track=document.getElementById('track'),answer=document.getElementById('answer');
+lessons.forEach((x,i)=>track.add(new Option(x.title,String(i))));
+function render(){const l=lessons[Number(track.value)];document.getElementById('heading').textContent=l.title;document.getElementById('lesson').textContent=l.body;document.getElementById('example').textContent=l.example;document.getElementById('question').textContent=l.question;answer.replaceChildren();l.answers.forEach((x,i)=>answer.add(new Option(x,String(i))));document.getElementById('feedback').textContent='';}
+track.addEventListener('change',render);document.getElementById('check').addEventListener('click',()=>{document.getElementById('feedback').textContent=Number(answer.value)===lessons[Number(track.value)].correct?'Correct!':'Not quite. Review the lesson and try again.'});render();
+</script></body></html>
